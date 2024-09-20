@@ -1,4 +1,4 @@
-
+Topics to be covered by me:
 
 1. Linux
 2. Shell scripting - 3 days
@@ -119,13 +119,6 @@ $ rm <FileName>
 $ rm <FileName>*
 
 
-meesho1.java ... meesho5.java
-
-
-
-
-
-how to undo after clearing?
 
 
 
