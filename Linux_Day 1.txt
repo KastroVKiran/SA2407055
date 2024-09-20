@@ -1,0 +1,147 @@
+
+
+1. Linux
+2. Shell scripting - 3 days
+3. Introduction to DevOps - 2 days
+4. DevOps on AWS - 2 days
+5. GIT
+6. GitHub - 5 days
+7. Maven - 1 day
+8. Types of environments
+9. Webserver - Tomcat***/Apache/Nginx - 1 day
+10. Jenkins - 5 days
+11. SonarQube
+12. Artifact repository tool - Based on time - 1 day
+
+3 real-time projects + 1 additional project
+
+----------------
+LINUX
+----------------
+Linux Commands_Part 1
+-------------------------------------
+1. To clear the screen
+$ clear (or) control+l
+
+2. To know the date and time
+$ date
+
+3. To see the calendar
+$ cal
+
+4. To see the previous month, current month, and the next month
+$ cal -3
+
+5. To see the whole calendar of an year
+$ cal <Year>
+
+6. To see the disc utilization
+$ top
+
+7. To come out/exit of the previous command screen
+$ control+c
+
+8. Types of users available in Linux OS
+2 types of users will be available by default in Linux OS;
+1. ec2-user (default user)
+2. root
+
+8.1 Difference b/w ec2-user and root user
+8.1.1. when you are an ec2-user, you will not be allowed to install the softwares/packages/tools. Permissions are limited
+8.1.2. when you are the root user you will all the permissions
+
+9. To know the current user type
+$ whoami
+
+10. To switch to root user
+$ sudo su
+
+11. To switch to the ec2-user
+$ exit (or) control+d
+
+In Linux we have two important things;
+1. Directories - Folder
+2. Files - .txt, .java, .py, .net, ....
+
+12. To create a directory
+$ mkdir <DirectoryName>
+
+13. To see the list of directories
+$ ls (or) ls -l (or) ll
+
+14. To see the current working path
+$ pwd (Present Working Directory)
+
+15. To go inside a specific directory
+$ cd <DirectoryName>
+
+16. To go back to the previous directory 
+$ cd .. (one step backward)
+$ cd ../.. (two steps backward)
+$ cd ../../../ (three steps backward)
+
+To go directly into the home directory
+$ cd
+
+17. To delete an empty directory
+$ rmdir <DirectoryName>
+
+18. To delete a directory which contains sub-directories
+$ rm -rf <DirectoryName>
+
+19. To see the default directories
+$ cd /
+$ ls
+
+20. To go inside a default directory
+$ cd /<DirectoryName>
+
+21. How to create files in Linux OS?
+There are 3 ways to create files in Linux OS;
+1. touch
+2. cat
+3. vi
+
+22. To create one file 
+$ touch <FileName>
+
+23. To create multiple files at the same time
+$ touch <File1Name>  <File2Name>  <File3Name>  <File4Name> 
+
+24. To create multiple files with the same name (but with little change) at the same time
+$ touch <FileName>{1..10}
+prime1 prime2...prime10
+
+25. To delete a single file
+$ rm <FileName>
+
+26. To delete multiple files which consists of same name
+$ rm <FileName>*
+
+
+meesho1.java ... meesho5.java
+
+
+
+
+
+how to undo after clearing?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
