@@ -1,0 +1,176 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+													DAY 02
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+27. Creating files using cat command
+$ cat > <FileName>
+
+First it will create the file (if file is not available) and then it will allow us to write the content inside the file
+Write some content
+To come out of the file; control + c
+
+28. To see the content available inside a file
+$ cat <FileName>
+
+Note: cat command will work in two ways; 1. it will create the file and allows us to write the content inside the file. 2. it will allows us to see the content inside the file
+
+29. How to preserve the old content inside the file and write the new content inside the same file?
+$ cat >> <FileName>
+
+30. Creating a file and writing the content inside the file using vi or vim command
+$ vi <FileName>
+Steps:
+1. vi <FileName>
+2. Press 'i' to write the content inside the file
+3. Write the required content
+4. Press 'esc'
+5. To save and quit from the file ---> :wq
+6. To verify the content inside the file ---> cat <FileName>
+
+31. To know whether it is a file or a directory
+$ When we execute ls -l or ll command, if the first character in the line starts with - then it is a file. If the first character starts with d then it is a directory
+
+32. Additional commands for vi
+$ :w ---> to save
+$ :wq (or) :wq! ---> to save and quit
+$ :q! ---> to quit from the file without saving
+
+33. If i want to go to the end of a line
+$ shift + a
+
+34. If i want to the beginning of a line
+$ shift + i
+
+35. How to write the content above the existing line
+$ shift + o
+
+36. To write the content below a specific line
+
+
+37. To go directly to the starting point of the last line from anywhere
+$ shift + g
+
+38. To see the number of lines available in a file
+$ :set number
+
+39. How to go a specific line?
+$ :<LineNumber>
+
+40. To copy a specific line
+$ yy
+
+41. To paste the copied line
+$ p
+
+42. How to delete a line?
+$ dd
+
+43.  How to undo?
+$ u
+
+44. How to redo?
+$ control + r
+
+45. How to delete a specific number of lines at time?
+$ <NumberOfLinesYouWantToDelete>dd
+
+46. How to copy and paste a specific number of lines?
+$ <NumberOfLinesYouWantToCopy>pp
+
+47. How to copy a specific number of lines?
+
+48. How to search for specific word?
+$ /<WordName>
+
+
+additional questions:
+To copy line 3,4,7 of a file ---> press :3,4,7y (it will copy lines 3,4,7)
+Type 'p' to paste after the cursor
+
+To remove line numbers from a file
+$ cut -d' ' -f2- <FileName> > <NewFile>
+
+49. To delete everything available inside a file?
+$ :%d
+
+50. How to copy the content from one file to another file?
+$ cat <File1Name> > <File2Name>
+Note: This command will override the existing content
+
+51. If you dont want to override;
+$ cat <File1Name> >> <File2Name>
+
+53. $ cat <File1Name> >> <File2Name> <File3Name> <File4Name>
+
+54. How to create a copy of a file and also the content inside file?
+$ cp <File1Name> <File2Name>
+
+55. How to rename a file or a directory?
+$ mv <NameOfOriginalFile> <NameOfNewFile>
+Kastro.txt ---> kk.txt
+mv Kastro.txt kk.txt
+
+56. To see the first 10 lines in a file
+$ head <FileName>
+
+57. To see the last 10 lines in a file
+$ tail <FileName>
+
+58. To see the content from the specific number of line from the top
+$ head -n <LineNumber> <FileName>
+
+59. To see the content from the specific number of line from the bottom
+$ tail -n <LineNumber> <FileName>
+
+**************************************************************
+----------------------
+Assignment:
+----------------------
+60. To see the content available in a specific line from top
+$ head +3 <FileName>
+
+61. To see the content available in a specific line from bottom
+$ tail +3 <FileName>
+**************************************************************
+62. To know the word count in a file
+$ wc <FileName>
+
+3 12 56 kk.txt
+
+3 ---> Number of lines in the file
+12 ---> Number of words in the file
+56 ----> Number of characters in the file
+kk.txt ----> File Name
+
+63. GREP command
+GREP - Global Regular Expression Print
+GREP command is used to search for a word
+GREP will process the text line by line and prints the lines which contains the word
+
+Syntax: grep '<WordName>' <FileName>
+
+the above command is case sensitive
+
+How to ignore the case sensitiveness while using grep command
+grep -i '<WordName>' <FileName>
+
+64. How to search for a word in all the files at a time?
+grep -i 'WordName>' *
+
+65. SED
+Stream Editor
+This command is used to replace a word with another word
+Using SED command we can replace the text without opening the file
+
+Syntax: sed 's/<WordNameYouWantToReplace>/<NewWord>/' <FileName>
+
+66. How to delete the last line in a file?
+$ sed '$d' <FileName>
+
+67 To delete the lines from specific line number?
+$ sed '6,$d' <FileName>
+
+
+
+
+
+
