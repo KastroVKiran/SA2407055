@@ -1,0 +1,313 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+													DAY 03
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+68. File Permissions
+Once we execute ls -l (or) ll command, we will see combinations of rwx/rw-/--x/.....
+in general, a file permission in linux is divided into 3 sections.
+1. User permission (u)
+2. Group permission (g)
+3. Others permission (o)
+
+in linux, we have 3 types of permissions.
+1. Read permission (r)
+2. Write permission (w)
+3. Execute permission (x)
+
+Ex: rw-rw-r--
+
+kastro.txt -------------> rw-  -wx  --x
+
+User - in the above file, for user, we are having only read and write permissions. 
+Group - in the above file, for group, we are having only write and execute permissions.
+Others - in the above file, for others, we are having only execute permission.
+
+First 3 characters represents user permissions
+Second 3 characters represents group permissions
+Third 3 characters represents others permissions
+
+Note: We can customized the file permissions in linux.
+
+In order to customize the file permissions in linux OS, we will use a command known as 'chmod'
+'chmod' is used to modify the file permissions in linux.
+
+69. How to add a read permission for a file for an user
+$ chmod u+r <FileName>
+
+70. How to add a write permission for a file for an user
+$ chmod u+w <FileName>
+
+71. How to add a execute permission for a file for an user
+$ chmod u+x <FileName>
+
+72. How to add a read permission for a file for a group
+$ chmod g+r <FileName>
+
+73. How to add a write permission for a file for a group
+$ chmod g+w <FileName>
+
+74. How to add a execute permission for a file for a group
+$ chmod g+x <FileName>
+
+75. How to add a read permission for a file for others 
+$ chmod o+r <FileName>
+
+76. How to add a write permission for a file for others
+$ chmod o+w <FileName>
+
+77. How to add a execute permission for a file for others
+$ chmod o+x <FileName>
+
+78. How to add multiple permissions for user
+$ chmod u+rwx <FileName>
+
+79. How to add multiple permissions for others
+$ chmod o+rwx <FileName>
+
+80. How to add multiple permissions for group
+$ chmod g+rwx <FileName>
+
+Note: To remove the file permissions we will use - (minus) symbol
+
+81. Working with file permissions using numbers
+File permissions using numbers
+
+0 - No permission
+1 - Only execute permission
+2 - Only write permission
+3 - Write and Execute permission
+4 - Only read permission
+5 - Read and Execute permission
+6 - Read and write permission
+7 - Read, write and execute permission
+
+Note: 
+When you give all the 3 numbers, the permissions will be changed from LEFT SIDE to RIGHT SIDE
+When you give 1 or 2 numbers, the permissions will be changed from RIGHT SIDE to LEFT SIDE
+
+Task: How to remove file permissions using numbers.
+
+82. Default users in linux OS;
+	~ ec2-user
+	~ root
+
+83. How to create custom users?
+$ sudo useradd <UserName>
+
+84. How to verify whether user got created or not?
+$ id <UserName>
+
+Note:
+If you are an ec2-user, and if you want to create an user, you should give 'sudo' at the beginning of the command
+If you are an root user, and if you want to create an user, there is no need to give 'sudo' at the beginning of the command
+
+85. How to switch to the custom user?
+$ sudo su <UserName>
+
+86. How to see the list of users created?
+First go inside '/home' directory and then execute ls -l (or) ll command
+
+87. How to remove a custom user?
+$ sudo userdel <UserName>
+
+Note: When you want to delete the user permanantly, directly execute the below command in the /home/ec2-user path
+$ sudo userdel -r <UserName>
+
+88. How to create a group?
+$ sudo groupadd <GroupName>
+Every group will have a unique id
+
+89. How to see the id of a group? (or) How to verify the groups available?
+$ cat /etc/group
+
+Note: 
+Whenever we create an user, automatically a group will also get created with the same name.
+Whenever we create a group, an user will not get created.
+
+90. How to add users to a specific group?
+$ sudo usermod -aG <GroupName> <UserName>
+
+91. How to see an user belongs to which group?
+$ id <UserName>
+
+92. How to remove an user from a group?
+$ sudo gpasswd -d <UserName> <GroupName>
+
+93. How to delete a group?
+$ sudo groupdel <GroupName>
+
+94. How to see the list of users available?
+$ cat /etc/passwd
+
+95. How to see the list of users available in a group?
+$ sudo lid -g <GroupName>
+
+96. How to set a password for an user?
+$ sudo passwd <UserName>
+
+97. Working with 'chown' command
+'chown' represents change ownership
+
+Step1: create a file
+Step2: ls -l
+For the file create in step, you will see like below
+ec2-user ec2-user
+First ec2-user represents Owner of the file
+Second ec2-user represents which Group the file belongs to.
+
+98. How to change the ownership of a file?
+$ sudo chown <UserName> <FileName>
+
+99. How to change the ownership of a file? (2nd method)
+$ sudo chown <Userid> <FileName>
+
+100. How to change the group permissions of a file/directory?
+$ sudo chown <UserName>:<GroupName> <FileName>
+
+101. Working with 'locate' and 'find' commands
+These commands are used to search for the files in Linux OS.
+
+To see the location of a particular file;
+$ locate -c <FileName>
+
+Note: Locate command will detect the .txt files alone
+
+102. How to find the number of .txt files available?
+$ locate -c *.txt
+$ locate -c *.py
+$ locate -c *.java
+
+103. How to see the list of .txt files and their path?
+$ locate *.txt
+
+104. Working with 'find' command
+'find' command will search for files and directories in the actual file system. 
+It also provides advanced searching technniques.
+
+$ find <FileName>
+
+105. How to search for the files which are empty?
+$ sudo find /home -type f -empty
+
+106. How to search for the directories which are empty?
+$ sudo find /home -type d -empty
+
+$ wget ---> Used to download a files/softwares based on url
+$ curl  ---> Used to send a request to url
+$ ping ---> Used to check the network connectivity
+
+Install tomcat ----> sudo wget <URL>
+
+
+107. Package Managers 
+yum - Yellowdog Updater, Modifier - linux
+apt - Advanced Packaging Tool - ubuntu
+rpm - Redhat Package Manager - redhat
+dnf - Dandified yum
+dpkg - Debian Package Management System
+
+Linux OS: 
+yum install git
+yum install maven
+yum install java
+
+Ubuntu OS:
+apt install git
+apt install maven
+apt install java
+
+108. Advanced yum commands
+
+$ yum update
+$ yum check-update
+$ yum list ---> To see the list of packages that are installed
+$ yum info <s/w name> ----> To see the information about a s/w
+$ yum history ---> To see the history of commands executed
+yum uninstall <s/w name>
+
+----------------------------
+File Types in Linux:
+----------------------------
+Regular files (-): Ordinary data files like text files, images, or executable binaries.
+
+Example: .txt, .jpg, .sh, etc.
+Directory (d): A special type of file that contains a list of other files and directories.
+
+Example: /home/user, /etc, etc.
+Symbolic link (l): A file that points to another file or directory (similar to shortcuts).
+
+Example: ln -s target linkname
+Character device file (c): Represents a hardware device that sends or receives data one character at a time (e.g., terminal or keyboard).
+
+Example: /dev/tty, /dev/null
+Block device file (b): Represents a hardware device that reads/writes data in blocks (e.g., hard drives).
+
+Example: /dev/sda, /dev/loop0
+Socket file (s): Used for inter-process communication (IPC).
+
+Example: /var/run/docker.sock
+FIFO or named pipe (p): A special file for communication between processes.
+
+Example: mkfifo pipefile
+
+----------------------------
+File Types in UNIX
+----------------------------
+Regular files (-): Standard data files that can contain text, binary, or executable code. These files are the most common.
+
+Example: .txt, .c, .sh
+Directory files (d): Special files that hold references to other files or directories.
+
+Example: /usr, /bin, /home
+Symbolic (soft) link files (l): Files that act as pointers to other files or directories. Similar to shortcuts.
+
+Example: ln -s /path/to/file linkname
+Character device files (c): Represent devices that handle data as a stream of bytes, like keyboards or serial ports.
+
+Example: /dev/tty, /dev/zero
+Block device files (b): Represent devices that handle data in fixed-size blocks, like hard drives.
+
+Example: /dev/sda, /dev/disk1
+Socket files (s): Used for inter-process communication (IPC), typically between services.
+
+Example: /var/run/socketfile.sock
+FIFO (named pipe) files (p): A special type of file used for communication between processes. Data written to a FIFO is read in the order it was written.
+
+Example: mkfifo mypipe
+
+-----------------------------------------------
+Disk Partition Commands in Linux
+-----------------------------------------------
+List disks and partitions
+sudo fdisk -l
+
+Partition a disk using fdisk
+sudo fdisk /dev/sda
+
+Inside fdisk:
+n: Create a new partition.
+d: Delete a partition.
+p: Print the partition table.
+w: Write changes and exit.
+q: Quit without saving changes.
+
+Use parted for larger disks (2TB+):
+Start parted for a disk:
+sudo parted /dev/sda
+
+Inside parted:
+mklabel gpt: Create a GPT partition table.
+mkpart primary ext4 0% 100%: Create a new partition with ext4 file system.
+print: Display partition details.
+quit: Exit the parted utility.
+
+Format the partition:
+sudo mkfs.ext4 /dev/sda1
+
+Mount the partition:
+sudo mount /dev/sda1 /mnt
+
+Check disk space and partitions:
+df -h
+
+Resize a partition using resize2fs
+sudo resize2fs /dev/sda1
