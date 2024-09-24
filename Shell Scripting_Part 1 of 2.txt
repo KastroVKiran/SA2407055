@@ -1,0 +1,180 @@
+Linux OS Architecture
+Application
+Shell
+Kernel
+Hardware
+
+What is a Shell?
+Shell provides an environment to an user to execute commands and interact with Kernel
+Its typically an user interface to execute the commands
+
+Types of Shell?
+bash, sh, ksh, tsh, fish, zsh
+
+How to check the shell type?
+echo $0
+
+To know the default shells available in the Linux
+cat /etc/shells
+
+What is shell scripting?
+Shell scripting consists of set of commands to perform a task.
+All the commands execute sequentially
+
+mkdir Kastro ---> cd Kastro ---> vi kastro.sh ---> write the below content ---> 
+#!/bin/bash 
+echo "Welcome to Shell Scripting classes"  ---> esc ---> :wq ---> In the above, #! is called as SHEBANG, bash is the (default) shell type ---> Lets see how to run the script ---> Firstly, make sure the file has executable permissions ---> Lets check the permissions ---> ls -l ---> If the file is not having execute permissions, lets provide ---> chmod +x <FileName> ---> ls -l ---> You can see the file in green colour ---> Lets execute the file ---> ./<FileName>.sh ---> You can see the content getting printed ---> If you want to terminate, control + c ---> If you want to stop, control + z
+
+Note: If the file is there in some other location, then to execute that file ---> /<Path>/<FileName>.sh
+
+--------------------------------------
+Comments in Shell Scripting
+--------------------------------------
+Comments are made using #
+
+To do single line comment, keep # at the beginning of the line
+To do multi-line comment, keep 
+<<content
+...
+keep the comment here
+...
+comment
+
+Lets work on single line comment(s) ---> vi comments.sh ---> Write the below content
+#!/bin/bash
+echo "This is Comments File"
+#This is a comment line
+ ---> esc ---> :wq ---> Lets execute in another way ---> bash <FileName>.sh ---> You can see only "This is Comments File" but "This is a comment line" is not printed because it is commented
+
+Lets work with multi-line comment(s) ---> vi multiline.sh ---> Write the below content
+#!/bin/bash
+echo "This is Comments File"
+<<comment
+This 
+is
+a 
+multiline
+comment 
+file
+comment
+ ---> esc ---> :wq ---> Lets execute in another way ---> bash <FileName>.sh ---> You can see only "This is Comments File" but "This is a comment line" is not printed because these lines are commented
+
+--------------------------------
+Variables in shell scripting
+--------------------------------
+Variables are the places where we store the information
+Ex:
+VAR_NAME=value
+VAR_NAME=$(hostname)
+echo $VAR_NAME
+
+vi varaibles.sh ---> Write the below content ---> 
+#!/bin/bash
+#This file is for variables demo
+a=111
+name="Kastro"
+role="DevOps Trainer"
+ ---> esc ---> :wq ---> Currently we have defined the variable and its value. Now when we execute the shell it wont print, because we have just defined the variable and its values. Lets verify ---> bash <FileName>.sh ---> You can see nothing is printed ---> So, whenever we are using/printing the variables we have to use $ symbol ---> vi <AboveFileName>.sh ---> 
+
+#!/bin/bash
+#This file is for variables demo
+a=111
+name="Kastro"
+role="DevOps Trainer"
+
+echo "My name is $name and I'm a $role"
+
+ ---> esc ---> :wq ---> Lets execute now ---> bash <AboveFileName.sh> ---> You can see "My name is Kastro and I'm a DevOps Trainer" ---> Can we define multiple variables in a single file? YES ---> vi <AboveFileName.sh> ---> 
+
+#!/bin/bash
+#This file is for variables demo
+a=111
+name="Kastro"
+role="DevOps Trainer"
+
+echo "My name is $name and I'm a $role"
+
+name="Machine Learning"
+
+echo "I'm currently a Doctoral Scholar working on $name" ---> esc ---> :wq ---> bash <AboveFileName.sh> ---> You will see the whole content.
+
+If you want to store the content inside a variable ---> vi <AboveFileName>.sh ---> 
+
+#!/bin/bash
+#This file is for variables demo
+a=111
+name="Kastro"
+role="DevOps Trainer"
+
+echo "My name is $name and I'm a $role"
+
+name="Machine Learning"
+
+echo "I'm currently a Doctoral Scholar working on $name"
+
+#Variable to store the output of a command
+HOSTNAME=$(hostname)
+echo="Name of this VM is $HOSTNAME ---> esc ---> :wq ---> bash <AboveFileName>.sh ---> You can see the output
+
+
+-------------------------------------------------
+ARRAYS in SHELL SCRIPTING
+-------------------------------------------------
+Variables are used to store the values
+Suppose if i have multiple (10) values then i have to make 10 variables. This is complex. So using ARRAYS we can store the values and we can also retrieve those values as well.
+The access and retrival of values can be done using Index number basis. The indexes will start from 0.
+For arrays, space separated values has to be given
+
+Syntax to define an array;
+myArray=( 10 20 30 Kastro Kiran "This is Array Concept" )
+
+vi arrays.sh ---> Write the below content --->
+#!/bin/bash
+
+#This is Array Demo File 
+
+myArray=( 10 20 30 Kastro Kiran "This is Array Concept" )
+#In the above i have given one variable, inside which i have given multiple values
+
+#Lets see how to restore the values
+echo Value in 4th index is "${myArray[4]}"
+
+---> esc ---> :wq  ---> bash <FileName>.sh ---> You can see value in 4th index is Kiran
+=================================================================
+Suppose if i want to print all the values in the array;
+vi arrays.sh ---> Write the below content --->
+#!/bin/bash
+
+#This is Array Demo File 
+
+myArray=( 10 20 30 Kastro Kiran "This is Array Concept" )
+#In the above i have given one variable, inside which i have given multiple values
+
+#Lets see how to restore the values
+echo "The total values in my array are ${myArray[*]}"
+
+echo Value in 4th index is "${myArray[4]}"
+
+---> esc ---> :wq  ---> bash <FileName>.sh ---> You can see all the values in the array
+
+How to get length of an array?
+echo "${#myArray[*]}"
+
+How to get specific values?
+echo "${#myArray[*]:1}"
+echo "${#myArray[*]:1:2}"
+
+How to update an array with new values?
+myArray+=( 7 9 11 )
+echo "values of my new array are ${myArray[*]}"
+
+
+
+
+
+
+
+
+
+
+
