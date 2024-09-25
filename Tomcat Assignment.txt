@@ -1,0 +1,68 @@
+How to download the tomcat server into the local system
+----------------------------------------------------------------------
+https://tomcat.apache.org/download-90.cgi
+Click on Tomcat 9 in the downloads section
+
+Working with Tomcat in the linux ec2 instance
+-----------------------------------------------------------
+~ Launch the Linux based VM
+~ Connect to the Instance
+~ Install Java Software:
+	To install Java 11 on Amazon Linux:
+	sudo amazon-linux-extras install java-openjdk11
+
+	To install Java 08 on Amazon Linux:
+	sudo yum install java-1.8.0-openjdk
+~ Check the Java Version:
+	java -version
+
+Installation of Tomcat Web Server in Linux based VM
+----------------------------------------------------------------------------
+~ Since the VM is Linux based OS, we will install the "tar" file of Apache Tomcat Web Server
+		https://tomcat.apache.org/download-90.cgi
+~ Keep the cursor on tar.gz file and right click and select 'Copy link address'
+~ To install the Webserver: wget <Paste the tar.gz link> (Tar file of Apache Tomcat will get installed)
+~ Extract the tar file
+	tar -xvf <Name visibile in the red colour in the above link>
+	ls -l (You can see the extracted file in blue clolor)
+~ cd <Enter the name visibile in blue colour in above line>
+	ls -l (To see the folder structure)
+
+Starting the Tomcat Sever
+------------------------------------------
+~ To start the server, we need to access the startup.sh file. This file is available in BIN Folder
+~ cd bin/
+~ To start the sever, 
+	./startup.sh (You can see "Tomcat Started")
+
+Accessing Tomcat Server
+--------------------------------------
+~ Copy the Public IP of EC2 Instance and paste in new tab ---- You will see the error page. This is because, the port no. 8080 is not enabled.
+
+~ Enable Port No. 8080 in SGs of EC2 Instance.
+	Type: Custom TCP, Port: 8080, Source: Anywhere
+
+~ After enabling the port no 8080, go to new tab,
+		<Paste the public IP of instance>:8080/ -----------You can see tomcat server page
+
+Since we are accessing the Tomcat in our PC, we can only access the HOME PAGE of TOMCAT. We cannot perform the Admin activities from our PC.
+To perform the admin activities from our PC, we need to edit the "context.xml" and configure "tomcat-user.xml" files.
+
+Editing the context.xml to give the Admin permissions
+------------------------------------------------------------------------------
+File path of context.xml:
+	cd tomcat/webapss/manager/META-INF/context.xml
+
+vi context.xml ----> Edit the allow tag -----> ".*" />
+
+Configuring the Users in Tomcat
+---------------------------------------------
+we need to edit the tomcat-users.xml to configure the users. 
+The "tomcat-users.xml" file is available in "conf" folder
+
+<role rolename="manager-gui" />
+<user username="tomcat" password="tomcat" roles="manager-gui" />
+<role rolename="admin-gui" />  
+<user username="admin" password="admin" roles="manager-gui,admin-gui"/>
+
+Click on 'Server Status' in the Tomcat Browser ----> Enter the username (admin) and password (admin)
