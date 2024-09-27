@@ -1,0 +1,63 @@
+step-by-step guide to transferring files using scp between two Amazon Linux EC2 instances. I will assume you're transferring from Instance A (the source) to Instance B (the destination).
+
+Step 1: Check SSH Key Permissions
+Make sure you have the SSH key files (e.g., .pem files) that allow you to access both instances. You'll need these keys to securely connect to each instance.
+
+Instance A Key: source-key.pem
+Instance B Key: destination-key.pem
+Ensure the permissions of your key files are set correctly. Run the following command for each key file on your local machine:
+
+chmod 400 /path/to/source-key.pem
+chmod 400 /path/to/destination-key.pem
+Step 2: Verify SSH Access to Both Instances
+Check that you can SSH into both EC2 instances. This step ensures that you can connect to both Instance A and Instance B.
+
+Connect to Instance A (Source):
+ssh -i /path/to/source-key.pem ec2-user@<instance-A-public-IP>
+
+Connect to Instance B (Destination):
+ssh -i /path/to/destination-key.pem ec2-user@<instance-B-public-IP>
+If you can connect to both instances successfully, proceed to the next step.
+
+Step 3: Open SSH Traffic Between Instances
+Make sure both instances have security group rules allowing SSH access from each other.
+
+To check and update security groups:
+Go to EC2 Dashboard in the AWS Management Console.
+Select Instance A and Instance B.
+Check the Security Group for each instance.
+Edit the inbound rules of both security groups to allow traffic on port 22 (SSH) from the other instance’s IP.
+For example:
+Instance A should allow SSH from Instance B’s private IP.
+Instance B should allow SSH from Instance A’s private IP.
+Use private IPs if both instances are in the same VPC to avoid data transfer costs.
+
+Step 4: SCP from Instance A to Instance B
+Now, you can transfer files from Instance A to Instance B using scp.
+
+Method 1: Transfer File from Instance A to Instance B (from your local machine)
+You can run the scp command directly from your local machine.
+
+Example Command:
+
+scp -i /path/to/source-key.pem -i /path/to/destination-key.pem ec2-user@<instance-A-public-IP>:/path/to/source/file ec2-user@<instance-B-public-IP>:/path/to/destination
+If both instances are in the same VPC and you want to use private IPs for faster transfer:
+
+scp -i /path/to/source-key.pem -i /path/to/destination-key.pem ec2-user@<instance-A-private-IP>:/path/to/source/file ec2-user@<instance-B-private-IP>:/path/to/destination
+Method 2: SSH into Instance A and then SCP to Instance B
+SSH into Instance A (source instance):
+
+
+ssh -i /path/to/source-key.pem ec2-user@<instance-A-public-IP>
+Run the SCP command from Instance A to transfer files to Instance B:
+
+scp -i /path/to/destination-key.pem /path/to/source/file ec2-user@<instance-B-public-IP>:/path/to/destination
+If using private IPs for both instances:
+
+scp -i /path/to/destination-key.pem /path/to/source/file ec2-user@<instance-B-private-IP>:/path/to/destination
+Step 5: Verify File Transfer
+Once the SCP command is completed, SSH into Instance B to verify that the file has been copied successfully.
+
+ssh -i /path/to/destination-key.pem ec2-user@<instance-B-public-IP>
+ls /path/to/destination
+You should see the transferred file in the directory.
