@@ -1,0 +1,45 @@
+-----------------------------------------------------------------------------------------------------------------------
+In EC2 Ubuntu Instance Create a new user and SSH Key pair with an authorized key
+-----------------------------------------------------------------------------------------------------------------------
+
+Connect to Your EC2 Instance
+
+Execute the below command with required path of the pem file
+ssh -i /path/to/your-key.pem ubuntu@<EC2-public-IP>
+
+Create a New User
+sudo adduser <new-username>
+
+Switch to the New User
+sudo su - <new-username>
+
+Create an .ssh Directory for the New User
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+
+Create an SSH Key Pair (On Local Machine)
+Generate an SSH key pair on your local machine (your computer, not the EC2 instance) using the following command:
+ssh-keygen -t rsa -b 4096
+
+This command will create a public-private key pair. When prompted, you can either specify a location to save the key or press Enter to save it in the default location (~/.ssh/id_rsa). You can also set a passphrase for the key.
+
+Copy the Public Key to the EC2 Instance
+After generating the key pair, you need to copy the public key (id_rsa.pub) to the new user's ~/.ssh/authorized_keys file on the EC2 instance. On your local machine, use ssh-copy-id or manually copy the key.
+
+To manually copy the key:
+First, display the public key using the following command on your local machine:
+cat ~/.ssh/id_rsa.pub
+
+On the EC2 instance, still logged in as the new user, open the authorized_keys file:
+vi ~/.ssh/authorized_keys
+
+Paste the public key into this file, then save and exit.
+
+Set the Correct Permissions
+chmod 600 ~/.ssh/authorized_keys
+
+SSH into the EC2 Instance Using the New User
+Now, from your local machine, you can connect to the EC2 instance using the new user and the SSH key:
+ssh -i ~/.ssh/id_rsa <new-username>@<EC2-public-IP>
+
+You should now be connected to the instance as the new user with the SSH key.
