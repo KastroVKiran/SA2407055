@@ -1,0 +1,58 @@
+AWS DevOps is a set of developer tools which allows users to create CI & CD pipelines from the source stage to the deployment stage
+AWS Developer Services:
+1. AWS Code Commit - GIT & GITHUB
+2. AWS Code Build - MAVEN & JENKINS
+3. AWS Code Deploy - JENKINS
+4. AWS Code Pipeline - JENKINS
+5. AWS Cloud Formation - Terraform
+
+
+3 ----- 5 = 15 Services
+IBM ----- 5 = 20 Services
+
+AWS Code Commit
+-------------------------------
+=> CC is a version control tool
+Netflix --- 2000 (v1), 2002 (v2), 2008 (v6), 2021 (v18), 2024 (v26)
+=> 50 GB/month
+=> Only 10000 pull/push requests per month
+=> 5 active users per month
+=> Serverless
+
+AWS Code Pipeline
+---------------------------
+=> CP is a service which is used to create the CI&CD Pipelines for automation of the application deployment
+=> Downtime for the pipeline will not be there
+=> >5 --- Charged
+
+Jenkins = SQ + Nexus + Terraform + K8S (t2.large/medium)
+
+Terminologies in CP:
+1. Pipeline
+Office (10.00 AM) ----- 04.00 AM (Sleep), 7.00 AM, 8.00, 9.00, 9.50, 10.00
+2. Source Code Revision
+3. Stages
+4. Actions
+
+-------------------------------
+AWS Cloud Formation
+-------------------------------
+s3 bucket - file - CFN Template - YAML/YML (Yet Another Markup Language)
+
+-----------------------------
+AWS Code Build
+-----------------------------
+netflix.java ----> compilation -----> Netflix.class ----> package ---> jar (JAVA ARCHIVE) or war (WEB ARCHIVE) files ----> Deploy
+
+STANDALONE - jar
+WEB - war
+
+
+
+
+
+
+
+
+
+
