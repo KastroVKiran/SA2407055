@@ -12,11 +12,21 @@ Topics discussed for **SA2407055**
 9. Jenkins
 10. 3 Real-time projects based on above mentioned topics
 
-Complimentary Content: You can access **FREE Docker course** created by me using the below YouTube url
-https://www.youtube.com/playlist?list=PLs-PsDpuAuTeNx3OgGQ1QrpNBo-XE6VBh
+## 🎥 Course Links
 
-You can connect with me on LinkedIn using below url
-https://www.linkedin.com/in/kastro-kiran/
+- **Docker Playlist**: [Watch the Full Course](https://www.youtube.com/playlist?list=PLs-PsDpuAuTeNx3OgGQ1QrpNBo-XE6VBh)
+- **AWS Tutorials Playlist**: [Explore AWS Tutorials](https://www.youtube.com/playlist?list=PLs-PsDpuAuTdOcZa-DDgG8KRbtMI_XRrC)
+- **Nexus YouTube Video Link**: [*Click Here*](https://youtu.be/opJAfDOCZuI)
+
+---
+
+## 🤝 Connect with Me
+
+For networking and further discussions, feel free to connect with me!
+
+- [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kastro-kiran/)
+- [![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://chat.whatsapp.com/EGw6ZlwUHZc82cA0vXFnwm) - Join the DevOps technical discussions!
+
 
 
 Happy Learning..!
