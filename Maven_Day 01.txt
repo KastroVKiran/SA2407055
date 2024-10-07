@@ -1,0 +1,189 @@
+														MAVEN
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+What is Maven?
+=> Maven is a build tool
+=> Maven is used to create an "Initial Project Folder Structure" to write the source code of the application
+=> Maven tool is used for Java based projects
+=> Based on the coding language the build tool will change;
+		1. Java ----> Maven (Commonly preferred)
+		2. Python ----> PyBuilder
+		3. .net ----> MS Build
+		4. Ruby ----> Rakes
+=> In the project, developers will write the source code of the application. The code written by developers has to be built by using any of the build tools, based on the programming language.
+=> Maven is used for Java based projects**
+=> Maven is also called as "Java Build Tool"
+=> Maven is an O/S software and is available for free.
+
+Advantages of Maven
+---------------------------------
+1. Using Maven we will create the Initial Project Folder Structure
+
+2. Using Maven we can download the dependencies that are required to develop the application
+
+In order to build an application, apart from Programming Language (Java/Python), we also need "other" scripting languages to fully develop the application. These are called as "Dependencies"
+Netflix --- Java (JPL) --- .html, .css, .js.....
+Java --- SpringBoot, Spring, .... Frameworks
+Netflix - 10 frameworks/dependencies
+
+2.1. How maven will download the dependencies?
+Maven will download the dependencies by using a file which is known as "pom.xml" file, which is available in the project folder structure.
+The dependencies have to be configured in the pom.xml file
+POM - Project Object Model
+".m2 folder"
+
+2.2. The pom.xml will act as a mediator b/w the user and the system
+Whatever communication that you want to do with maven, you should do only by using pom.xml file
+Maven ---- pom.xml
+MLA ---- PA
+
+
+3. Using Maven we will do the compilation
+
+netflix.java (Human understandable language) -----> netflix.class (Machine understandable language)
+The process of converting the .java file into .class file is known as Compilation.
+
+.java --------------------------------> .class
+
+4. Using Maven we can do the packaging of a project
+
+When 100's of .java files are available, we need to Package all those files
+
+Java projects can be packaged in two ways, based on the type of application;
+1. Standalone application -----> .jar (Java Archive)
+2. Web application -----> .war (Web Archive)
+
+Once we get the jar/war files, then those files are deployed into the servers
+
+		Compilation					    Execute
+.java -------------------------------> .class ------------------------------> JVM ---------------------------------> Output
+
+Standalone Application
+1. This type of applications doesn't require internet access
+2. These app are limited to one device
+3. Least preferred
+4. These app will generate the "jar" files
+
+Web Application
+1. This type of applications require internet access
+2. These app are not limited to one device
+3. Most preferred
+4. These app will generate the "war" files
+
+
+Introduction to Maven
+--------------------------------
+=> Maven is used for Java based projects
+=> Maven is developed by using JPL
+=> To work with maven, we need to install java in our machine
+=> When you install java, you will get two folders;
+		1. JDK - Java Development Kit
+		2. JRE - Java Runtime Environment
+=> Developer needs both JDK and JRE
+=> Client needs only JRE
+=> Maven is developed by Apache Organization
+
+How to download and Install Java s/w?
+https://download.oracle.com/java/21/latest/jdk-21_windows-x64_bin.exe (sha256)
+
+Once after the installation of java s/w, we need do 2 configurations for java;
+1. Setting the JAVA_HOME path
+
+
+2. Setting the path for java
+
+Maven Configuration;
+https://maven.apache.org/download.cgi
+
+1. Setting the MAVEN_HOME path
+
+
+2. Setting the path for maven
+
+---------------------------
+Maven Terminology
+---------------------------
+1. Archetype:
+It is used to specify what type of application we are going to create.
+It refers to a project template that one can use to quickly set up a new folder structure
+
+Standalone App ----> maven-archetype-quickstart
+Web App ----> maven-archetype-webapp
+
+App Name: Netflix - Movies, Animations, Sci-Fi.....
+
+2. Artifact ID:
+It represents the project name or project module name
+Project: Netflix (or) Netflix-Movies
+An artifact refers to any file that can be downloaded, installed and/or deployed into the servers
+
+How will you generate an artifact?
+By executing maven goals
+
+3. Packaging:
+It represents how you want to package your application i.e either a war file or a jar file
+
+4. Group ID:
+It represents the project/.company name
+
+
+============================================
+How to create standalone application using Maven:
+============================================
+mvn archetype:generate -DgroupId=in.<CompanyName> -DartifactId=<ProjectName> -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+-------------------------------------------------------
+How to create a project folder structure?
+-------------------------------------------------------
+E-Drive ----> Create a folder (StandAloneApp) -----> Open Command Prompt in that folder path -----> Verify for Java and Maven softwares -----> Execute the below command
+
+mvn archetype:generate -DgroupId=in.StarAgile -DartifactId=Netflix -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+---------------------------------
+Maven Folder Structure
+---------------------------------
+Whenever you create a standalone or web application, you will see the below folder structure;
+
+1. src folder
+	1.1. main folder ---> consists of source code of application (App.java)
+	1.2. test folder ---> consists of testing information of source code (AppTest.java)
+
+2. pom.xml file
+	2.1. Using pom.xml file we will add the dependencies required for the project
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------
+How to create initial project folder structure for standalone application
+------------------------------------------------------------------------------------
+mvn archetype:generate -DgroupId=in.StarAgile -DartifactId=<ProjectName> -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+
+
+
+
+
+
+

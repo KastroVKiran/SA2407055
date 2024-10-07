@@ -1,0 +1,78 @@
+To configure JAVA_HOME and PATH for Java, and MAVEN_HOME and PATH for Maven on an Apple laptop as system environment variables, follow these steps:
+
+Step 1: Determine Installation Paths
+Java Installation Path:
+Open a Terminal and run:
+
+/usr/libexec/java_home -V
+This will list the installed Java versions along with their paths.
+
+Maven Installation Path:
+If Maven is installed via Homebrew, its path is usually /usr/local/Cellar/maven/<version>/libexec. If you installed it manually, navigate to the directory where Maven is installed.
+
+Step 2: Open the Profile File
+Open your terminal and edit the profile file. The profile file can be one of the following depending on the shell you are using (bash, zsh, etc.):
+
+For bash (default for older macOS versions):
+
+nano ~/.bash_profile
+For zsh (default for newer macOS versions, starting from macOS Catalina):
+
+nano ~/.zshrc
+Step 3: Set JAVA_HOME and PATH
+Add the following lines to set JAVA_HOME and update the PATH for Java:
+
+export JAVA_HOME=$(/usr/libexec/java_home -v <java_version>)
+export PATH=$JAVA_HOME/bin:$PATH
+Replace <java_version> with the version you want to use (e.g., 11 or 16). To set a specific Java version, use the exact path obtained in Step 1.
+
+Add the following lines to set MAVEN_HOME and update the PATH for Maven:
+
+export MAVEN_HOME=/usr/local/Cellar/maven/<version>/libexec
+export PATH=$MAVEN_HOME/bin:$PATH
+Replace <version> with the Maven version you have installed.
+
+Step 4: Save and Apply Changes
+Save the changes in nano editor by pressing CTRL + O, then Enter to confirm. Exit the editor by pressing CTRL + X.
+
+Apply the changes by running the following command:
+
+For bash:
+
+source ~/.bash_profile
+For zsh:
+
+source ~/.zshrc
+Step 5: Verify the Configuration
+To verify that JAVA_HOME is set correctly, run:
+
+echo $JAVA_HOME
+This should print the Java installation path.
+
+To verify that MAVEN_HOME is set correctly, run:
+
+echo $MAVEN_HOME
+This should print the Maven installation path.
+
+To check if java and mvn are correctly added to PATH, run:
+
+java -version
+mvn -version
+If everything is set up correctly, these commands should display the respective versions of Java and Maven.
+
+Example Configuration for zsh:
+Here is an example of what your ~/.zshrc file might look like after making the changes:
+
+
+export JAVA_HOME=$(/usr/libexec/java_home -v 11)
+export PATH=$JAVA_HOME/bin:$PATH
+
+export MAVEN_HOME=/usr/local/Cellar/maven/3.8.5/libexec
+export PATH=$MAVEN_HOME/bin:$PATH
+Replace 11 with your desired Java version and 3.8.5 with your installed Maven version.
+
+
+
+
+
+
