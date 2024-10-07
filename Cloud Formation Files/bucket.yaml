@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an S3 bucket in the Mumbai region.
+
+Resources:
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: 'kastro-demo-cfn-bucks-04oct'
+      AccessControl: Private
+      Tags:
+        - Key: Name
+          Value: 'kastro-demo-cfn-bucks-04oct'
+
+Outputs:
+  BucketName:
+    Description: 'Name of the S3 bucket'
+    Value: !Ref S3Bucket

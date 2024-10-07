@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an EC2 instance in the Mumbai region.
+
+Resources:
+  EC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: 't2.micro'
+      ImageId: 'ami-0b2f6494ff0b07a0e' # Update this to the latest Amazon Linux 2 AMI ID for Mumbai region
+      KeyName: 'your-key-pair-name'    # Replace with your existing KeyPair name
+      BlockDeviceMappings:
+        - DeviceName: '/dev/xvda'
+          Ebs:
+            VolumeSize: 10
+            VolumeType: 'gp2'
+      Tags:
+        - Key: Name
+          Value: 'kastro-demo-cfn-instance'
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: 'true'
+          DeviceIndex: '0'
+          SubnetId: 'subnet-12345678'  # Replace with your subnet ID from the default VPC
+
+Outputs:
+  InstanceId:
+    Description: 'Instance ID of the newly created EC2 instance'
+    Value: !Ref EC2Instance
+  PublicIp:
+    Description: 'Public IP address of the newly created EC2 instance'
+    Value: !GetAtt EC2Instance.PublicIp

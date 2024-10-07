@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an IAM user with S3 full access permissions.
+
+Resources:
+  # IAM User
+  IAMUser:
+    Type: 'AWS::IAM::User'
+    Properties:
+      UserName: 'kastro-cfn-user'
+      Path: '/'
+      Policies:
+        - PolicyName: 'S3FullAccessPolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action: 's3:*'
+                Resource: '*'
+
+  # Access Keys for the IAM User
+  IAMUserAccessKey:
+    Type: 'AWS::IAM::AccessKey'
+    Properties:
+      UserName: !Ref IAMUser
+
+Outputs:
+  UserName:
+    Description: 'The name of the IAM user'
+    Value: !Ref IAMUser
+  AccessKeyId:
+    Description: 'Access Key ID for the IAM user'
+    Value: !Ref IAMUserAccessKey
+  SecretAccessKey:
+    Description: 'Secret Access Key for the IAM user'
+    Value: !GetAtt IAMUserAccessKey.SecretAccessKey
+    Export:
+      Name: 'IAMUserSecretAccessKey'
