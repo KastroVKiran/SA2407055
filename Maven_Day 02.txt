@@ -1,0 +1,58 @@
+													Maven
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Day 02 Topics:
+------------------------
+1. How to add dependencies to the pom.xml file?
+=> Netflix ---- Java, Spring, Boot, Context
+
+mvnrepository.com
+
+2. Concept of Maven repositories
+1. Local Repo -----> Available in local system ----> .m2 folder (C drive) ---- C:\Users\<SystemName>\.m2
+2. Central Repo ------> Maintained by Apache Organization ----> mvnrepository.om
+3. Remote Repo -----> Maintained by individual organizations ----> Nexus, JFrog
+
+3. Maven goals
+Maven goals are nothing but maven commands
+All maven goals will start with "mvn"
+
+1. Clean: It will delete a folder which is known as Target folder.
+Target folder will be seen when we package the code
+Target folder consists of jar or war files
+Syntax: mvn clean
+
+2. Compile: It will compile the source code of the application (.java -----> .class)
+Syntax: mvn compile
+
+3. Test: It will perform the unit test execution of the source code
+Syntax: mvn test
+
+4. Package: It will package the project as a jar or war file
+Syntax: mvn package
+When we execute the package goal, the target folder will get created. If target folder is already available, package goal will delete the existing target folder and it will generate a new target fodler.
+Inside the target folder, the jar or war files will be available
+
+5. Install: To install the project as a dependency in the local repo.
+Syntax: mvn install
+
+Can i execute multiple goals at the same time?
+Yes
+Syntax: mvn clean compile package
+mvn package compile 
+mvn package
+
+
+Note: All the maven goals should be executed in the path where pom.xml file is available
+
+4. How to create a web application?
+
+<Execute the syntax provided in Maven Day 01 notes>
+
+
+5. Outline of Nexus
+To store the artifacts of a project, we will use remote repositories
+Ex: Nexus**, JFrog
+Nexus has to be integrated with Jenkins and Jenkins will automatically generate the war/jar file and then it will connect to the Nexus repo and it will store the artifact in the remote repo (Nexus)
+
+
+(Ref URL: https://youtu.be/opJAfDOCZuI?si=QdZ8XWfxvd6uBJ-U)
