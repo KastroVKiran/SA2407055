@@ -1,0 +1,42 @@
+													GIT_Day 01
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Installation of GIT in Linux based instances;
+sudo yum install git
+
+Installation of GIT in Ubuntu based instances;
+sudo apt install git
+
+Why to configure?
+To track the activity details of the team members.
+
+Ways to configure?
+System
+Settings applies to all users
+Global
+Settings applies to all repos of current user
+Local
+Settings applies to current repo.
+
+Note: All git commands will start with "git"
+
+Configuring users in git
+1. Username configuration
+git config --global user.name '<UserName>'
+
+To verify the username configuration;
+git config user.name
+
+2. Email configuration
+git config --global user.email '<UserEmailID>'
+
+To verify the user email configuration;
+git config user.email
+
+
+
+
+
+
+
