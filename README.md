@@ -1,3 +1,6 @@
+MobaXTerm Download Link: https://drive.google.com/file/d/1p_Lyz48XWtTvk3ELTPppEe-SD50sL4Em/view?usp=sharing
+VS Code Editor Download Link: https://code.visualstudio.com/download
+
 This Repository consists of DevOps class notes for the Batch of **SA2407055**
 
 Topics discussed for **SA2407055**
