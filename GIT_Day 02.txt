@@ -1,0 +1,127 @@
+													GIT_Day 02
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Git Stages
+----------------------
+1. Working directory/area ---> This is the place where we write the code
+2. Staging area ---> When the files are added to the staging area, git will track the files
+3. Repository area ---> This is a local repo where the tracked files will get stored
+
+Git workflow
+-------------------------
+Working directory ----> Initialize the git (git init) ----> Write the code/Create the files ----> Add the files to staging area (git add) ----> Send the files to local repo area (git commit) ----> Push the files to remote repo. (git push)
+
+Working with git
+-----------------------
+1. Create a folder in any drive of your PC
+2. Open git bash terminal
+3. Create a file
+4. Check the status of the file (File name will be in red colour, which means git is not tracking them)
+5. Track/Add the file to the staging area 
+6. Verify the status of the file (File name will be in green colour, which means git is tracking those files)
+7. Commit the files to local repo area
+8. Verify the file status (working tree clean)
+
+Git commands
+------------------------
+The commands in git are divided into 2 categories;
+1. Porcelean commands ---> High level commands ---> Used most commonly
+2. Plumming commands ---> Low level commands ----> Based on the requirement
+
+To see the list of all git commands
+git help -a
+
+To come out of the commands; press q
+
+To see the details/information related to specific command
+git help <CommandName> ---> The browser will open and will give the details about that command
+
+To remove the existing credentials
+git config --global --unset user.name
+git config --global --unset user.email
+
+To see the list of user names and email ids configured
+git config --list --show-origin
+
+To come out of the commands; press q
+
+To change the file name;
+git mv <OldFileName> <NewFileName>
+
+To see the commit history
+git log
+
+To come out of the commands; press q
+
+To see the commit history in a single line;
+git log --oneline
+
+To see the history of a specific commit;
+git show <CommitID>
+
+Note: Commit id is of 40 characters length
+
+To see the specific commits from the latest;
+git log -<GiveNumber>
+Ex: git log -3 ----> It will display the latest 3 commits
+
+To see the commit history in reverse order
+git log --reverse
+
+To see the commit history in reverse order in a single line
+git log --oneline --reverse
+
+To see the top commits;
+git show HEAD
+
+To delete a file
+git rm <FileName>
+
+--------------------------------------------------
+To recover a deleted file
+Assignment
+--------------------------------------------------
+
+To see the hidden files/folders
+ ls -la
+
+To delete the .git folder
+rm -rf .git
+It is not recommended to delete the .git folder
+
+To unstage a staged file;
+git rm --cached <filename>
+
+When the file is unstaged, to remove the changes in the file;
+git restore <filename>
+
+To know the author details;
+1. of a specific file ----> git blame <FileName>
+2. email of a specific file ----> git blame -e <FileName>
+
+To skip the staging area and directly commit the file
+git commit -am "text file"
+This is not a recommended approach
+
+To see the status of a file in a shortform
+git status -s
+=> If you see ?? in red colour, it means the file is not tracked by git
+=> If you see A in green colour, it means the file is tracked by git
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
