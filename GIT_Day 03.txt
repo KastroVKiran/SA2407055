@@ -1,0 +1,91 @@
+												GIT & GITHUB_Day 03
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. How to restore a deleted file
+2. Introduction to GitHub
+3. Public Vs Private Repository
+4. How to create a GitHub account
+5. Creating a public repository
+6. Pushing the Code from Local to Remote Repo.
+7. Understanding the importance of .git folder (config file)
+8. Cloning the Code to Local from Remote Repo.
+9. Deleting a repository
+10. Pushing the maven project available in local system to remote repo.
+11. Forking a repository
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. How to restore/recover a deleted file?
+-----------------------------------------------------
+1. Create the file
+2. Add and Commit the file
+3. Delete the file
+4. Get the logs
+5. Use the next latest commit id
+5.1. git checkout <NextLatestCommitID> <FileName>
+5.2. Commit the file
+
+--------------------------------------------------
+2. Introduction to GitHub
+--------------------------------------------------
+1. GitHub is GUI based
+2. Internet connection is required to work with GitHub
+3. GitHub is a remote repository
+
+GitHub is used to store the source code of the application
+To work with GitHub we need to create a GitHub account
+To send the code to GitHub repo, we need to use git terminal
+
+-------------------------------------------------
+3. How to create a GitHub account?
+-------------------------------------------------
+https://github.com/
+
+
+---------------------------------------------------
+4. Concept of Repositories in GitHub
+---------------------------------------------------
+What is a repository?
+Repository is a place where we can store the source code of the application.
+
+Types of repositories?
+We can create 2 types of repo.s in GitHub
+1. Public Repo. ----> which is accessible to anyone
+2. Private Repo. ----> which is accessible only to selected users. Preferred
+
+----------------------------------------------
+5. Creating a repository
+----------------------------------------------
+5.1 Public repo
+
+
+5.2. Private repo
+
+Every repo will have an unique repo URL
+
+------------------------------------------------------------
+6. How to push the code from local to remote repo
+------------------------------------------------------------
+
+Local Repo --------------> Remote Repo
+
+--------------------------
+7. Cloning a repo
+--------------------------
+Cloning means getting the updated code from remote repo to the local repo.
+To clone a remote repo, we will use Repo URL (HTTPS)
+
+Syntax: git clone <Repo URL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
