@@ -1,0 +1,94 @@
+												GIT & GITHUB_Day 05
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Merge Conflicts
+2. Cherry Pick
+3. Git Stash
+4. Git Pull
+5. Collaborators in GIT
+6. Git reset Vs. Git revert
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Git Branches
+-----------------------
+=> git branch <BranchName>
+=> git branch
+=> git checkout <BranchName>
+=> git merge <BranchName> / Pull requests
+=> git checkout -b <BranchName>
+
+1. Merge Conflicts
+Dev 1 ----> Python (File1) - Branch 1 
+Dev 2 -----> Java (File1) - Branch 2
+
+Dev 1 & Dev 2 ---> Netflix
+
+Merge the branches File1 File1 - Merge Conflicts
+Resolve the conflicts
+
+AWS - Versioning - Enable
+Bucket ---- Object1 (File1) ----> JAVA - 10.00 AM
+
+				File1 ----> PYTHON - 10.10 AM
+
+
+
+Branch1 ----> File1 ----> JAVA
+Branch2 ----> File1 ----> PYTHON
+
+Note: In real-time, we prefer to use merging of branches only in the GitHub repo
+
+
+2. Cherry Pick
+
+branch1 10 python files, 5 java files
+branch2
+
+
+3. git stash
+git stash
+git stash list
+git stash apply <StashID>
+
+
+4. Git Pull
+
+Clone ----> It will download the complete repo. For first time when you are working on a project, you will usually do the clone
+Pull ----> It is used to get the changes from the remote repo to the local repo
+
+Dev1 - Kastro -----> clone, 10.00 AM --- code changes and will push the updated to repo
+Dev2 - Prajwal ----> 10.30 AM (bug) ---- take the latest code ---- pull --- 11.00 AM --- push
+
+Dev1 - Kastro ----> 11.30 AM (bug) ----pull --- do the changes --- push 
+Dev2 - Prajwal ----> 12.00 PM (bug) ----pull --- do the changes --- push 
+
+
+5. Git reset
+
+This command moves the HEAD (pointer to the latest commit) to a previous commit, removing commits from the history.
+Use git reset when you want to move back in history, effectively "deleting" commits from the project history (not ideal for shared/public repositories).
+
+Steps:
+1. Initialize git
+2. Create file in local and commit
+3. Add one line in the above created file and commit - Add "JAVA"
+4. Add another line in the above created file and commit - Add "PYTHON"
+5. Add another line in the above created file and commit - Add "GOLANG"
+6. git log --oneline (Now we have 4 commits). The recent commit is "GOLANG". This commit is available in local only.
+7. Lets say i want to remove the latest commit. To do that, we have to use the next latest commit id. 
+If I want to remove first 3 commits, then i have use 4th commit.
+8. Now i will remove the latest commit. To do that i have to use next latest commit id ----> git reset <NextLatestCommitID>
+9. git log --oneline ----> You dont see the latest commit. But changes will be there in working area ----> check that using "git status". You can see the file in red colour
+
+There are 3 types of resets; 1. soft reset, 2. hard reset, 3. mixed reset (default)
+Mixed reset removes the commit and keeps the changes in the working area. ----> git status ----> You will see the file in red colour
+
+Lets work with soft reset
+First lets stage the file ----> git add <FileName> ----> Commit the file ----> git log --oneline ----> git reset --soft <NextLatestCommitID>
+Soft reset will remove the commit and will keep the changes in the staging area.
+git status ----> You can see file in green colour. But when default reset was used, the changes were in working area.
+
+To permanently discard the changes, then we will use hard reset.
+git commit -m "<Commit Message>" ----> git log --online ----> git reset --hard <NextLatestCommitID>
+Goto the file ----> You dont see the changes made.
+
+
+Assignment: git revert

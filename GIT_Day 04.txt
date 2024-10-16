@@ -1,0 +1,39 @@
+												GIT & GITHUB_Day 04
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+BRANCHES
+-------------------------------
+Netflix
+	movies ----> dev 1
+	documentaries ----> dev 2
+	animies ----> dev 3
+	series ----> dev 4
+
+To create a branch ----> git branch <BranchName>
+To see the list of branches ----> git branch
+To switch from one branch to another branch ----> git checkout <BranchName>
+
+
+.gitignore
+
+Renaming a branch
+
+Pull request
+webseries (21 files) ----> movies (5 files)
+
+Deleting a branch
+
+
+Git Merge and Git Rebase
+Merge will show files, rebase will not show the files
+Merge will show the entire history, rebase will not show the history
+Merge will not show branches, rebase will show branches
+
+Creating a branch in the GitHub
+
+
+***********************************
+reset options and revert.
+***********************************
+
+
+
