@@ -21,7 +21,9 @@ Topics discussed for **SA2407055**
 - **Docker Playlist**: [Watch the Full Course](https://www.youtube.com/playlist?list=PLs-PsDpuAuTeNx3OgGQ1QrpNBo-XE6VBh)
 - **AWS Tutorials Playlist**: [Explore AWS Tutorials](https://www.youtube.com/playlist?list=PLs-PsDpuAuTdOcZa-DDgG8KRbtMI_XRrC)
 - **Nexus YouTube Video Link**: [*Click Here*](https://youtu.be/opJAfDOCZuI)
+- **SonarQube YouTube Video Link**: [*Click Here*](https://www.youtube.com/watch?v=ScdedztTaAU&list=PLs-PsDpuAuTfPpu5PI1Ulvbd0BlIt4txy&index=1&t=3s)
 
+Assignment Submission Form: https://forms.gle/aH4zQWniWgoVAfNSA
 ---
 
 ## 🤝 Connect with Me
