@@ -1,0 +1,318 @@
+========================================================================================================
+													Jenkins_Day 03
+========================================================================================================
+1. Backup of Jenkins jobs
+2. Configuration of Email in Jenkins
+3. GitHub Webhooks
+4. Trigger Builds Remotely
+5. Upstream and downstream jobs in Jenkins
+6. Jenkins Pipeline
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Jenkins installation commands:
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo yum upgrade
+sudo dnf install java-17-amazon-corretto -y
+sudo yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+
+-----------------------------------------------------------
+5. Upstream and downstream jobs in Jenkins
+-----------------------------------------------------------
+Job1
+Job2
+Job3
+
+
+Sequential execution of jobs based on the previous job status (success)
+
+--------------------------------
+3. GitHub Webhooks
+--------------------------------
+Poll SCM --------------> Only when there is a change in the GitHub repo, the job will get triggered (* * * * *), but we have to wait for 1 minute to trigger the job
+Build Trigger --------------> Whether there is a change or not in the source code, automatically based on the CRON expression the job will get triggered (* * * * *)
+
+Immediately (10 seconds) when developer makes the changes in the GitHub repo, the build should get triggered. In this case we will use GitHub Web Hooks
+
+
+
+How to get a backup of Jenkins jobs?
+---------------------------------------------------
+accidently when someone deletes a job, can we recover the deleted job? YES
+
+10.00 AM Job1 ----> 100% backup ----> Full backup will automatically happens for the first time
+11.00 AM Job1 ----> some changes ----> only the changes made to the job will be taken as differential backup
+
+5 backups
+
+
+3 - 90 mins
+4 - 120 mins
+5 - 150 mins
+6 - 180 mins
+7 - 210 mins
+
+Dashboard ----> Manage jenkins ----> Plugins ----> Available plugins ----> Select 'ThinBackup' and install it ----> Once after installing the plugin, Goto 'Manage jenkins', scroll down to 'Tools and Actions', you can see 'ThinBackup' option ----> Click on 'ThinBackup', you can see 'Backup now', and 'restore' options ----> Goto Manage Jenkins ----> System ----> Scroll down to 'ThinBackup Configuration' ----> Backup directory: /var/lib/jenkins/backup ----> Backup schedule for full backups: H * * * * ----> Backup schedule for different backups: H * * * * ----> Max number of backup sets: 5 (when the 6th backup gets created, the 1st backup will get deleted) ----> Check all the options visible, provide 120 as the number under 'Force jenkins to quiet mode after specified minutes ----> Apply ----> Save
+
+Jenkins dashboard ----> Manage jenkins ----> Scroll down to 'Tools and Actions' ----> Click on 'ThinBackup' ----> Click on 'Backup Now' ----> If you see an error message like 'A problem occured while processing the request'; execute the below commands in MobaXTerm to give necessary permissions
+
+sudo mkdir -p /var/lib/jenkins/backup
+sudo chown -R jenkins:jenkins /var/lib/jenkins/backup
+sudo chmod -R 755 /var/lib/jenkins/backup
+
+Restart the jenkins ----> sudo systemctl restart jenkins
+
+Goto MobaXTerm ----> Goto cd /var/lib/jenkins/backup ----> ls -l ----> You can see the backup directory ----> Go inside the backup directory and click ls -l  ----> You will see all the files used for that job.
+
+Lets see how to recover the deleted job
+------------------------------------------------
+Create a job ----> Build the job atleast once ----> Delete the job ----> Lets recover ----> Goto Manage Jenkins ----> scroll down to 'Tools and Actions', and click on 'ThinBackup' option ----> Click on 'Restore' ----> Select the backup directory (currently we have only one backup, so select the available backup) ----> Click on 'Restore' ----> But you will not be able to see the recoverd job. For that we have restart the jenkins
+
+Restart the jenkins ----> sudo systemctl restart jenkins
+
+Login into the jenkins again ----> You can see the deleted job now ----> Go inside the job, You can also see the builds also got restored
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4. Trigger Builds Remotely
+-----------------------------------------
+Create a freestyle job ----> Make sure to build the job 
+
+Goto the Job ----> Configure ----> Build Triggers ----> 'Check' Build Trigger Remotely ----> Authentication Token: <EnterAnyNameForToken> ----> Copy the URL below and paste it notepad. The URL looks like as shown below;
+
+Syntax: JENKINS_URL/job/job1/build?token=TOKEN_NAME or /buildWithParameters?token=TOKEN_NAME
+
+----> Apply ----> Save
+
+Paste the URL in new browser and you can see Jenkins is asking for username and password. Enter username and password, and check for the build. A new build should have got executed.
+
+Here, if i have to enter the username and password, i can directly login to the Jenkins console and i can click on build now. I dont want to enter the Jenkins creds. I want to generate an url, once i hit the url (without entering the username and password) the job should get built.
+
+To do this we have to install a Pugin known as; "Build Authentication Token Root"
+Install the above plugin
+
+Paste the URL in browser and click enter ---> Now it will not ask the Jenkins creds ---> Goto the Jenkins console and the new build got created.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. Configuration of Email in Jenkins
+-----------------------------------------
+Step1) Installation of 'Mailer Plugin'
+Dashbboard ----> Manage Jenkins ----> Plugins ----> Available Plugins ----> Select 'Mailer Plugin' ----> Install
+
+Step2) Email Configuration
+Dashbboard ----> Manage Jenkins ----> System Configuration: System ----> Scroll down to 'E-mail notification' ----> SMTP Server ----> To setup the details for SMTP server, we will use SES service in AWS ----> Goto AWS ----> Goto SES Service ----> Click on 'Identities' (leftpane) ----> Create identity ----> Identity type: 'Check' Email address ----> Email address: <Provide email id> ----> Create identity
+
+Goto email provided above and confirm the verification by clicking on the link received in email
+
+Click on SMTP settings (leftpane) ----> You can see the SMTP endpoint and StartTLSPort ----> Goto the jenkins dashboard ----> SMTP Server: <Paste the SMTP Endpoint for SES Console> ----> Click on 'Advanced' ----> 'Check' Use SMTP Authentication ----> To get username and password, goto SES service ----> SMTP Settings (leftpane) ----> Click on Create SMTP Credentials ----> Username: jenkins-kastro ----> Create user ----> You can see IAM username as 'jenkins-kastro', SMTP username and SMTP password also ----> Go to the jenkins console ----> Username: <paste the username from AWS console> ----> Password: <paste the password from AWS console> ----> 'Check' use TLS ----> SMTP Port: 587 ----> Reply-to-address: <provide email id> ----> Scroll up to 'Jenkins Location' ----> System admin email address: <provide email id> ----> 'Check' Test configuration by sending test e-mail ----> Test email receipient: <Provide email id> ----> Click on 'Test configuration' to receive a test email from jenkins ----> You can see 'email was successfully sent' ----> Apply ----> Save ----> Go to email to check the test email
+
+Step3) Email integration with job
+Open any existing job ----> Configure ----> Post build actions ----> You can see the 'email notification'. Click on it. ----> Recepient: <Provide email id> ----> 'Check' send email for every unstable build, and 'Check' Send separate emails to individuals who broke the builds ----> In the build steps, add a simple shell script with some error inside the script. So that build fails, then we will get the email. ----> Apply ----> Save ----> Click on Build now ----> Make sure the build is failed ----> Goto email to check for notification.
+
+Now correct the script in the job ----> Then click on build now ----> Once the build is success. You will get an email notification.
+
+------------------------------
+6. Jenkins Pipeline
+------------------------------
+PaaC ----> Pipeline as a Code
+
+Pipeline is a single platform where we are going to run the entire code as a pipeline
+
+Freestyle - creation and execution of Jenkins job using Jenkins UI
+
+Pipeline - creation and execution of jobs will be made by writing the code
+
+In Jenkins we can write the pipeline in 2 ways;
+1. Declarative pipeline
+2. Scripted pipeline
+
+1. Declarative pipeline
+- recent and advanced style of writing a pipeline script
+- syntax and structure is very important
+- mostly suitable for complex and large scale projects
+- it supports code validation
+- easy to read and manage
+
+2. Scripted pipeline
+- oldest
+- groovy language
+- it is based on DSL (Domain Specific Language)
+java - DSL
+python - DSL
+.net - DSL
+- hard to read and manage
+
+
+Pipeline stages
+-------------------------
+P - pipeline
+A - agent any
+S - stages
+S - steps
+
+10.00 AM - Office
+
+11.00 PM (Sleep early) -----> 07.00 AM (Wakeup time) -----> 08.00 AM (Refreshments) -----> 09.00 AM (Start to Office) ----> 10.00 AM (At Office)
+
+11.00 PM (Sleep early)
+	Alarm
+	Turn off the lights
+	Lock the house
+
+MAVEN
+	mvn compile
+	mvn package
+	mvn test
+	mvn clean
+
+
+Netflix App
+---------------------
+1. Get code from repo (Stage 1)
+2. Build and Package the code (Stage 2)
+3. Deploy the code to servers (Stage 3) - Tomcat 
+
+
+
+Pipeline - Stage 1 
+-------------------------
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone the Code') {
+            steps {
+                git 'https://github.com/KastroVKiran/Netflix-Pipeline-Project.git'
+            }
+        }
+    }
+}
+
+
+Pipeline - Stage 1 & Stage 2
+----------------------------------------
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven s/w'
+    }
+
+    stages {
+        stage('Clone the Code') {
+            steps {
+                git 'https://github.com/KastroVKiran/Netflix-Pipeline-Project.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                script {
+                    def mavenHome = tool name: 'maven s/w', type: 'maven'
+                    def mavenCMD = "${mavenHome}/bin/mvn"
+                    // Run Maven build with parallel execution and skip tests if needed
+                    sh "${mavenCMD} clean package -T 1C -DskipTests"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up after build...'
+            cleanWs() // Clean workspace after build
+        }
+    }
+}
+
+Pipeline - Stage 1 & Stage 2 & Stage 3
+--------------------------------------------------
+Note: Before writing stage 3, run the below commands in MobaXTerm
+sudo visudo
+
+Note: #Add the following line at the end of the file, assuming the Jenkins user is 'jenkins'
+jenkins ALL=(ALL) NOPASSWD: /bin/cp
+
+
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven s/w'
+    }
+
+    stages {
+        stage('Clone the Code') {
+            steps {
+                git 'https://github.com/KastroVKiran/Netflix-Pipeline-Project.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                script {
+                    def mavenHome = tool name: 'maven s/w', type: 'maven'
+                    def mavenCMD = "${mavenHome}/bin/mvn"
+                    // Run Maven build with parallel execution and skip tests if needed
+                    sh "${mavenCMD} clean package -T 1C -DskipTests"
+                }
+            }
+        }
+        stage('Deploy Stage') {
+            steps {
+                script {
+                    // Ensure target directory exists before copying
+                    sh 'ls -l target'
+                    // Deploy the WAR file to Tomcat
+                    sh 'sudo cp target/NETFLIX-1.2.2.war /home/ec2-user/apache-tomcat-9.0.96/webapps'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up after build...'
+            cleanWs() // Clean workspace after build
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
