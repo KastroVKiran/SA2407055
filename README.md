@@ -22,6 +22,7 @@ Topics discussed for **SA2407055**
 - **AWS Tutorials Playlist**: [Explore AWS Tutorials](https://www.youtube.com/playlist?list=PLs-PsDpuAuTdOcZa-DDgG8KRbtMI_XRrC)
 - **Nexus YouTube Video Link**: [*Click Here*](https://youtu.be/opJAfDOCZuI)
 - **SonarQube YouTube Video Link**: [*Click Here*](https://www.youtube.com/watch?v=ScdedztTaAU&list=PLs-PsDpuAuTfPpu5PI1Ulvbd0BlIt4txy&index=1&t=3s)
+- **DevOps Real-time Project 1**: [*Click Here*](https://youtu.be/x55z7rk0NAU)
 
 Assignment Submission Form: https://forms.gle/aH4zQWniWgoVAfNSA
 ---
