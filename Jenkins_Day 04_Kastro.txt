@@ -1,0 +1,204 @@
+========================================================================================================
+													Jenkins_Day 04
+========================================================================================================
+1. Trigger Build Remotely
+2. Changing Jenkins Port Number
+3. Configuration of Email in Jenkins
+4. Integrating Private GitHub Repo
+5. Throttle Builds
+6. Jenkins Master and Slave Architecture
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Jenkins installation commands:
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo yum upgrade
+sudo dnf install java-17-amazon-corretto -y
+sudo yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Trigger Build Remotely
+---------------------------------------
+When the Jenkins Admin or the Project Lead is not available to build the job instantly then we will trigger the build remotely.
+To trigger the builds remotely, we have to manually build the job at least once.
+We will use an URL to trigger to job without using Jenkins credentials.
+
+
+Steps:
+1. Create a freestyle job and build it
+2. Configure the job using "Trigger Build Remotely" option
+Give the token name - any name can be given
+http://43.207.211.188:8080/job/Trigger%20Job/build?token=kastro
+
+When we hit the above URL, Jenkins will ask for Username and Password. Only after entering the Jenkins credentials the job will be successfully built. But this is not the scenario in realtime.
+In real-time, we have to trigger the job remotely without providing the Jenkins credentials.
+To do this, we will install a plugin known as "Build Authorization Token Root"
+
+3. Install the plugin
+
+4. Use the below syntax to trigger the build remotely without the need of Jenkins credentials
+Syntax:
+<Jenkins URL>/buildByToken/build?job=<JobName>&token=<TokenName>
+
+
+Ex:
+http://43.207.211.188:8080/buildByToken/build?job=Trigger Job&token=kastro
+
+
+2. Changing Jenkins Port Number
+------------------------------------------------------
+1. Switch to the below path
+cd /usr/lib/systemd/system
+
+2. In the above path search for a file which is known as "jenkins.service" file
+ls -l *jenkins*
+
+3. Edit the file where ENVIRONMENT tag
+Environment="JENKINS_PORT=8080"
+
+4. Change the port of your requirement (Ex: 9090) ----> esc ---> :wq
+
+5. Open the new port number in the Security Group of EC2 Instance
+
+6. Restart the Jenkins 
+sudo systemctl restart jenkins
+
+7. Access the Jenkins using new port number
+
+----------------------------------------------
+3. Configuration of Email in Jenkins
+----------------------------------------------
+10 People
+Team Lead has to monitor the activities happening in the Jenkins dashboard.
+30 GB ----> 2 GB Jenkins, 5 GB SonarQube, 3 GB Nexus, 10 GB K8S
+
+This option will send the notifications about the job built status
+AWS ---> SES
+
+
+Step1) Installation of 'Mailer Plugin'
+Dashbboard ----> Manage Jenkins ----> Plugins ----> Available Plugins ----> Select 'Mailer Plugin' ----> Install
+
+Step2) Email Configuration
+Dashbboard ----> Manage Jenkins ----> System Configuration: System ----> Scroll down to 'E-mail notification' ----> SMTP Server ----> To setup the details for SMTP server, we will use SES service in AWS ----> Goto AWS ----> Goto SES Service ----> Click on 'Identities' (leftpane) ----> Create identity ----> Identity type: 'Check' Email address ----> Email address: <Provide valid email id> ----> Create identity
+
+Goto email provided above and confirm the verification by clicking on the link received in email
+
+Click on SMTP settings (leftpane) ----> You can see the SMTP endpoint and StartTLSPort ----> Goto the jenkins dashboard ----> SMTP Server: <Paste the SMTP Endpoint from SES Console> ----> Click on 'Advanced' ----> 'Check' Use SMTP Authentication ----> To get username and password, goto SES service ----> SMTP Settings (leftpane) ----> Click on Create SMTP Credentials ----> Username: jenkins-kastro ----> Create user ----> You can see IAM username as 'jenkins-kastro', SMTP username and SMTP password also ----> Go to the jenkins console ----> Username: <paste the username from AWS console> ----> Password: <paste the password from AWS console> ----> 'Check' use TLS ----> SMTP Port: 587 ----> Reply-to-address: <provide email id> ----> Scroll up to 'Jenkins Location' ----> System admin email address: <provide email id> ----> 'Check' Test configuration by sending test e-mail ----> Test email receipient: <Provide email id> ----> Click on 'Test configuration' to receive a test email from jenkins ----> You can see 'email was successfully sent' ----> Apply ----> Save ----> Go to email to check the test email
+
+Step3) Email integration with job
+Open any existing job ----> Configure ----> Post build actions ----> You can see the 'email notification'. Click on it. ----> Recepient: <Provide email id> ----> 'Check' send email for every unstable build, and 'Check' Send separate emails to individuals who broke the builds ----> In the build steps, add a simple shell script with some error inside the script. So that build fails, then we will get the email. ----> Apply ----> Save ----> Click on Build now ----> Make sure the build is failed ----> Goto email to check for notification.
+
+Now correct the script in the job ----> Then click on build now ----> Once the build is success. You will get an email notification.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------
+6. JENKINS MASTER and SLAVE ARCHITECTURE
+------------------------------------------------------------------------------------------------
+VM ----> Jenkins ----> Created the jobs ----> Built the jobs (Success/Failure)
+10 GB -----> 5 GB (softwares), 4 GB (Project), 5 builds (1 GB), 6th build ----> Success/Failure
+
+Due to storage capacity issues the Jenkins installed VM is getting hanged. To take care of this situation, we need to distribute the load.
+In order to distribute the load, we will use a concept which is known as MASTER and SLAVE
+MASTER and SLAVE are nothing but EC2 instances only
+
+MASTER NODE (VM 1) ----> Install all the softwares, configurations, plugins,..... Create the jobs
+
+SLAVE NODE (VM 2) ----> Build the jobs
+
+MASTER Node ----> Jenkins, Java, GIT
+SLAVE Node ----> Java
+
+
+Note: 
+1. Can we have multiple MASTER nodes?
+NO
+2. Can we have multiple SLAVE nodes? 
+YES
+3. Master node should have large configuration
+
+-----------------
+DEMO
+-----------------
+Connect to jenkins master node.
+
+Launch one or two new instances (slave 1 and slave 2) of t2.medium isntances
+
+Connect to slave 1 in Moba
+$ sudo dnf install java-17-amazon-corretto -y
+
+Setup the slave 1 server in Master
+------------------------------------------------
+Jenkins Console ----> Manage jenkins ----> Nodes ----> New node ----> Name: Slave1, "Check" permanent agent ----> Create.
+
+No. of executors: 3 (3 builds will execute parallelly) ----> Remote root directory: /tmp (It is a place where we want to store the build output. I want to store my output of my jenkins in 'tmp' folder) ----> Labels: slave1 ----> Usage: "Only build jobs with label expressions matching this node" (It means, if i give slave1 i.e label name:, then only it will build the job) ----> Launch method: Launch agents via SSH, Host: Private IP of slave1 VM, Credentials: Click on Add ----> Select 'Jenkins' ----> Domain Name: Global credentials, Kind: SSH Username with private key, Username: ec2-user, Private key: "Check" enter directly ----> Add: Paste the content in pem file that is used to launch the slave node ---> Add ----> Credentials: Select 'ec2-user'  ----> Host key verification strategy: non verifying verification strategy ----> Save. (Here we will give username and password for the server)
+
+You can see the SLAVE 1
+
+Create a job with git repo ----> Build steps: Invoke top level maven targets ----> Goals: clean package ----> Save ----> Apply
+
+Click on Build Now ----> By default when we click on build now, the build gets saved on master node. To verify this, Click on build number ----> Console output ----> You can see "Building on the built-in node." Here 'built-in node' means master node.
+
+The purpose of master and slave concept is, I want to build the jobs on worker/slave node, so that the load on master node will be reduced.
+
+Connect to Worker Node 1 in Moba ----> cd /tmp/ ----> ls ----> You dont see the output
+Connect to Master Node in Moba ----> cd /tmp/ ----> ls ----> You will see the output as 'workspace'
+
+Lets see how to add slave-1, on which we need to do the builds
+----------------------------------------------------------------------------
+Goto the Job ----> Configure ----> General ----> "Check" Restrict where this project can be run  ----> Label expression: slave1 ----> Apply ----> Save.
+Click on Build now.
+
+But you will see the build failure.
+This failure is because, we did not install maven and git on slave1.
+
+Connect to slave1 ----> (You are currently pointing to 'tmp' folder) ----> sudo yum install git java-1.8.0-openjdk maven -y
+
+Goto the Job ----> Click on Build Now ----> Click on build number ----> Console output ----> You can see "Building remotely on Slave1" and the path where the build got stored.
+
+Goto the slave1 connected tab in Moba ----> cd tmp ----> ls ----> You will see "workspace" directory ----> cd workspace ----> ls ----> You will see the job name ----> cd <job-name> ----> ls ----> cd target ----> You will see the "war" file.
+
+This is how we can reduce the load on master, by building the jobs on worker nodes.
+
+-----------------------------------------------------------
+Setup Slave2, following the above process.
+-----------------------------------------------------------
+Jenkins Console ----> Manage jenkins ----> Nodes ----> New node ----> Name: Slave2, "Check" permanent agent ----> Create.
+No. of executors: 3 (3 builds will execute parallely) ----> Remote root directory: /tmp (It is a place where we want to store the build output. I want to store the output of my jenkins  jobs in 'tmp' folder) ----> Labels: slave2 ----> Usage: "Only build jobs with label expressions matching this node" (It means, if i give slave1 i.e label name:, then only it will build the job) ----> Launch method: Launch agents with SSH, Host: Private IP of slave2 VM, Credentials: Click on Add ----> Select 'Jenkins' ----> Domain Name: Global credentials, Kind: SSH Username with private key, Username: ec2-user, Private key: "Check" enter directly ----> Add: Paste the content in pem file that is used to launch the slave node 2, Credentials: Select 'ec2-user'  ----> Host key verification strategy: non verifying verification strategy ----> Save. (Here we will give username and password for the server)
+
+You can see the OFFILINE for SLAVE 2
+
+What is the reason?
+
+Jenkins ----> Manage Jenkins ----> Nodes ----> slave2 ----> Log (leftpane) ----> You can see 'Launch Failed'. Above that, you can also see 'Java not found on hudson'.
+
+So, we have to install Java on slave2
+
+Connect to slave2 in moba ----> sudo amazon-linux-extras install java-openjdk11 -y
+
+Goto Jenkins Console ----> Dashboard ----> Nodes ----> slave2 ----> Status (Leftpane) ----> Click on 'Launch agent' ----> You can see "agent successfully connect and online." 
+
+Lets build the job on worker node 2 ----> Jenkins job ----> Configure ----> General ----> "Check" Restrict where this project can be run  ----> Label expression: slave2 ----> Apply ----> Save.
+Click on Build now.
+But you will see the build failure.
+This failure is becasue, we didnot install maven and git on slave2.
+
+Connect to slave2 ----> (You are currently pointing to 'tmp' folder) ----> yum install git java-1.8.0-openjdk maven -y
+
+Goto the Job ----> Click on Build Now ----> Click on build number ----> Console output ----> You can see "Building remotely on Slave2" and the path where the build got stored.
+
+Goto the slave2 connected tab in Moba ----> cd tmp ----> ls ----> You will see "workspace" directory ----> cd workspace ----> ls ----> You will see the job name ----> cd <job-name> ----> ls ----> cd target ----> You will see the "war" file.
+
+To see the load of master and slave nodes ----> Jenkins console ----> Dashboard ----> slave1 ----> Build History ----> You will see the build history.
+
+
