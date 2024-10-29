@@ -49,7 +49,6 @@ Private GitHub repos in Jenkins can be configured using two options;
 
 PAT - Personal Access Token
 
-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
 
 ------------------------------------
 3. Multi Branch Pipeline
