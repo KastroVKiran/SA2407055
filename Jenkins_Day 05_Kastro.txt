@@ -1,0 +1,158 @@
+========================================================================================================
+													Jenkins_Day 05
+========================================================================================================
+1. Throttle Builds
+2. Integrating Private GitHub Repo
+3. Multi Branch Pipeline
+4. RBAC
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Jenkins installation commands:
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+sudo yum upgrade
+sudo dnf install java-17-amazon-corretto -y
+sudo yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+sudo systemctl status jenkins
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1. Throttle Builds
+-----------------------
+Job ---> Build Now
+10.00 #1
+#10
+12.00 
+
+EBS Volume ---> Storage capacity will be utilized
+Jenkins ----> Downtime - Jenkins wont respond / Slow response
+
+#1
+1 hour
+#2
+
+Throttle builds means, if we want to give time difference b/w one build to the other build
+
+#2
+1 hour
+#3
+
+in 1 hour, i want to allow only 2 builds
+
+------------------------------------------------------------
+2. Integrating Private GitHub Repo
+------------------------------------------------------------
+Private GitHub repos in Jenkins can be configured using two options;
+1. PAT - Personal Access Token
+2. SSH Keys
+
+PAT - Personal Access Token
+
+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
+
+------------------------------------
+3. Multi Branch Pipeline
+------------------------------------
+Pipeline ---> 1 branch
+feature ----> v2.0 code
+master ----> v2.1 code
+
+Mon - Wed -----> Feature
+Thur- Sun ----> Master
+
+When we are working with Multibranch pipeline, in every branch JENKINSFILE should be available
+
+Whenever a developer creates a new branch and commits the code into it, the 'multibranch pipeline' will automatically detect the new branch and will build the pipeline
+
+Plugin: pipeline:multibranch
+
+----------------------
+4. RBAC
+----------------------
+RBAC - Roll Based Account Control
+
+DevOps ----> 5 people ----> Access the Jenkins Dashboard
+
+1 TL -----> Administrator Access
+4 TM ------> Roll Based Access
+	Person 1 - 5 years - Create the job and  Build the job
+	Person 2 - 3 years - Create the job
+	Person 3 - 1 year - Install and Configure tools
+	Person 4 - Fresher - 2 months - read access
+
+=> By default, the user for jenkins is 'Admin User'
+=> To verify the users of jenkins ----> cd /var/lib/jenkins ----> cd users ---> ls ---> You will see a file "users.xml"----> You can see the users
+
+=> In order to restrict the permissions to all the team members working for the same project, we have to create jenkins users with limited/rerquired permissions.
+
+=> This can be made by creating users in the jenkins.
+
+=> Jenkins users have to be created, because the jenkins admin cannot share the id and password for security reasons.
+
+Creation of users in jenkins
+---------------------------------
+Jenkins console ---> Manage jenkins ---> Scroll down to see 'Users' under 'Security' option; and click on it ---> Click on 'Create User' ---> Username: kiran, Password: password, Provide the other details also ---> Click on 'Create User'
+
+Reference:
+Jenkins Admin: kastro ---> All permissions
+Jenkins User: kiran ---> All permissions will come by default
+
+By default whenever we create a new user in Jenkins, that user will have the administrator permissions
+
+How to set permissions for jenkins users?
+-----------------------------------------------------
+Jenkins console ----> Manage jenkins ----> Security ----> Security Realm: jenkins own user database ----> 'uncheck' allow users to signup ----> Autherization: Select 'Project based Matrix Autherization Strategy' (or) 'Matrix based Security' ----> Add user ----> username: enter the user you have created ----> ok ----> Give the permissions accordingly in the matrix
+
+Logout from admin account.
+
+Login using user credentials and see the changes.
+
+
+--------------------------------------
+Modules discussed so far
+--------------------------------------
+1. Linux & Shell Scripting - 3 days
+2. DevOps Overview - 2 days
+3. DevOps on AWS - 2 days
+4. Maven - 1 day
+5. Git & GitHub - 5 days
+6. Jenkins - 5 days
+
+
+Docker
+Ansible
+Terraform
+Kubernetes
+Prometheus
+Grafana
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+													Kind Request
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Please write your feedback on LinkedIn about the Classes that I have taught so far and your experience of understanding the lectures. You can provide your honest feedback (Either Positive or Negative). It helps me to better myself, and it also helps others to follow my lectures.
+
+Make sure to tag me in the LinkedIn Post so that I can reshare it.
+
+Also, 
+If you are following my YouTube Videos (like Nexus, SonarQube, Docker Playlist, DevOps Real-time Projects and upcoming videos on my YouTube Channel), if you feel they have really added to your knowledge and helped you to gain skills and learn new tools, i would appreciate if you can post about this on LinkedIn, as it helps your friends and community to watch those videos. 
+
+Make sure to tag me in the LinkedIn Post so that I can reshare it.
+
+This is request. If you are not interested in posting, feel free to skip this message.
+
+Thank you
+
+Stay Connected
+
+
+
+
+
+
+
+
+
+
+
